@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  shopee.api:
+    image: ${DOCKER_REGISTRY-}shopeeapi
+    container_name: shopee-api
+    build:
+      context: .
+      dockerfile: Shopee.API/Dockerfile
+    ports:
+      - 8080:8080
+
+  shopee.db:
+    image: postgres:latest
+    container_name: shopee-db
+    environment:
+      - POSTGRES_DB=shopee
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
